@@ -2,13 +2,17 @@
     $name ??= "";
     $label ??= "";
     $type ??= "text";
-
     @endphp
 
 
 <div class="form-group">
     <label for="{{ $name  }}">{{ $label  }}</label>
-    <input type="{{ $type  }}" class= "form-control @error($name) is-invalid @enderror" name="{{$name}}">
+    @if($type === "textarea")
+        <textarea name="{{$name}}"></textarea>
+    @else
+        <input type="{{ $type  }}" class= "form-control @error($name) is-invalid @enderror" name="{{$name}}">
+    @endif
+
 </div>
 
 

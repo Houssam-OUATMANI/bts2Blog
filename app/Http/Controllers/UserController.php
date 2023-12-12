@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -29,5 +31,26 @@ class UserController extends Controller
 
     public  function  login() {
         return view("auth.login");
+    }
+
+
+    public function handleLogin( LoginRequest $request)
+    {
+        $connected = Auth::attempt($request->validated());
+        if($connected){
+            session()->regenerate();
+        }
+        else {
+            return redirect()->route("auth.login")->with("error", "Identifiant invalide");
+        }
+
+        return  redirect()->route("home")->with("success", "Connecté");
+    }
+
+
+    public function logout()
+    {
+        Auth::logout();
+        return  redirect()->route("home")->with("success", "Deconnecte");
     }
 }

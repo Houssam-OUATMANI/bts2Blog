@@ -8,6 +8,27 @@
     <title>@yield("title")</title>
 </head>
 <body>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Acceuil</a>
+        @guest()
+            <div>
+                <a class="navbar-brand" href="{{route("auth.register")}}">Inscription</a>
+                <a class="navbar-brand" href="{{route("auth.login")}}">Connexion</a>
+            </div>
+        @endguest
+        @auth()
+            <a class="navbar-brand" href="{{route("posts.create")}}">Ajouter une publication</a>
+            <form action="{{route('auth.logout')}}" method="post">
+                @csrf
+                @method("delete")
+                <button class="btn btn-warning" type="submit">Deconnexion</button>
+            </form>
+        @endauth
+    </div>
+</nav>
+
+@include("components.flash")
 
     <div class="container">
         @yield("content")
