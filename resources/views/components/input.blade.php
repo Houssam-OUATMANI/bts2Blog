@@ -2,15 +2,18 @@
     $name ??= "";
     $label ??= "";
     $type ??= "text";
+    $value ??=  ""
     @endphp
 
 
 <div class="form-group">
     <label for="{{ $name  }}">{{ $label  }}</label>
     @if($type === "textarea")
-        <textarea name="{{$name}}"></textarea>
+        <textarea class="form-control" name="{{$name}}">
+            {{$value}}
+        </textarea>
     @else
-        <input type="{{ $type  }}" class= "form-control @error($name) is-invalid @enderror" name="{{$name}}">
+        <input value="{{$value}}" type="{{ $type }}" class= "form-control @error($name) is-invalid @enderror" name="{{$name}}">
     @endif
 
 </div>
